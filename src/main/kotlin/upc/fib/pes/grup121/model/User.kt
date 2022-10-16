@@ -8,7 +8,7 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
-    var id: Long? = null,
+    var userId: Long? = null,
 
     @Column
     private val username: String? = null,

@@ -7,7 +7,7 @@ class Chat(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
-    var id: Long? = null,
+    var chatId: Long? = null,
     @OneToOne
     @JoinColumn(name = "friendship_id", referencedColumnName = "id")
     private val friendship: Friendship? = null,

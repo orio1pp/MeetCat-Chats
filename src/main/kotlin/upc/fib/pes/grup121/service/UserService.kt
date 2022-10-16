@@ -9,6 +9,9 @@ class UserService(private final var userRepository: UserRepository) {
     fun getUsers(): List<User> {
         return userRepository.findAll();
     }
+    fun getUserByUsername(username:String): User{
+        return userRepository.findUserByUseranme(username)
+    }
 
     fun setUser(user: User) {
         userRepository.save(user);

@@ -4,16 +4,19 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "message")
-class Message {
+class Message(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
-    var id: Long? = null;
+    var messageId: Long? = null,
     @Column
-    var text: String? = null;
+    var text: String? = null,
     @Column
-    var date: String? = null;
+    var date: String? = null,
     @ManyToOne
     @JoinColumn(name = "chat_id")
-    var chat: Chat? = null;
+    var chat: Chat? = null,
+    @Column
+    var username: String? = null )
+{
 }
