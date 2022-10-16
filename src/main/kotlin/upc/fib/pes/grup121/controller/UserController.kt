@@ -1,5 +1,7 @@
 package upc.fib.pes.grup121.controller
 
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,8 +19,14 @@ class UserController(private final var userService: UserService) {
     }
 
     @GetMapping("users/getUserByUsername")
-    fun getUser(@RequestParam username: String): User {
-        return userService.getUserByUsername(username)
+    fun getUser(@RequestParam username: String): ResponseEntity<User> {
+        username.let {
+            var user : User = userService.getUserByUsername(it)
+            user.let {
+                return ResponseEntity.ok(it)
+            }
+        }
+        return ResponseEntity(null, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("users/setUser")

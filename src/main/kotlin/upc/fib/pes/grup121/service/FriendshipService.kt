@@ -10,16 +10,19 @@ class FriendshipService(
     private final var friendshipRepository: FriendshipRepository,
     private final var userService: UserService
 ) {
-    fun getFriendshipsbyUsername(username: String):List<String> {
+    fun getFriendshipsbyUsername(username: String):List<String>? {
         var user: User = userService.getUserByUsername(username);
         user?.let {
-            var users: List<String> = friendshipRepository.getFriendshipsbyUsername(user.userId)
+            var users: List<String>? = friendshipRepository.getFriendshipsbyUsername(user.userId)
             return users;
         }
+        return null;
     }
-
     fun insertFriendship(friendship: Friendship) {
         friendshipRepository.save(friendship);
+    }
+    fun getFriendshipbyId(id: Long): Friendship{
+        return friendshipRepository.getReferenceById(id);
     }
 
 }

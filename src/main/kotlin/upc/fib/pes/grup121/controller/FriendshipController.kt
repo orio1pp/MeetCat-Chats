@@ -1,5 +1,6 @@
 package upc.fib.pes.grup121.controller
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,11 +19,11 @@ class FriendshipController(
 ) {
     @GetMapping("friendship/getFriendshipsbyUsername")
     fun getFriendshipsbyUsername(@RequestParam username: String): ResponseEntity<List<String>>? {
-        var friends: List<String> =friendshipService.getFriendshipsbyUsername(username);
-        if(!friends.equals(null))
-            return ResponseEntity.ok(friends)
-        else
-            return null;
+        var friends: List<String>? =friendshipService.getFriendshipsbyUsername(username);
+        friends.let {
+            return ResponseEntity.ok(it)
+        }
+        return ResponseEntity(null, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("friendship/insertFriendship")

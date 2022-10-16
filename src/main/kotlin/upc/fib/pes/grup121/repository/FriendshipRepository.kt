@@ -9,5 +9,5 @@ import java.util.StringJoiner
 
 interface FriendshipRepository: JpaRepository<Friendship, Long> {
     @Query("select u.username FROM Friendship f, User u where f.user_id = :id and u.user_id  = f.friend_id", nativeQuery = true)
-    fun getFriendshipsbyUsername(@Param("id") id: Long?): List<String>
+    fun getFriendshipsbyUsername(@Param("id") id: Long?): List<String>?
 }
