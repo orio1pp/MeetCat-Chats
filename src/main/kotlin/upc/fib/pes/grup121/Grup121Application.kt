@@ -5,7 +5,6 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class Grup121Application
-
 fun main(args: Array<String>) {
 	runApplication<Grup121Application>(*args)
 }
