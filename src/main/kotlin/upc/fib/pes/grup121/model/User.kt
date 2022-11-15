@@ -11,10 +11,29 @@ class User(
     var userId: Long? = null,
 
     @Column
-    private val username: String? = null,
+    private var username: String? = null,
 
     @Column
-    private val mail: String? = null
+    private var password: String? = null,
+
+    @Column
+    private var mail: String? = null,
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private var roles: MutableCollection<Role> = mutableListOf<Role>()
 ) {
+    fun getRoles(): MutableCollection<Role>{
+        return roles;
+    }
+    fun getUsername(): String?{
+        return username;
+    }
+    fun getPassword(): String?{
+        return username;
+    }
+
+    fun setPassword(password: String?){
+        this.password = password;
+    }
     
 }
