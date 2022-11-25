@@ -8,16 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import upc.fib.pes.grup121.model.Friendship
-import upc.fib.pes.grup121.model.User
 import upc.fib.pes.grup121.service.FriendshipService
-import java.util.StringJoiner
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @Controller
 class FriendshipController(
     private final var friendshipService: FriendshipService
 ) {
-    @GetMapping("friendship/getFriendshipsbyUsername")
+    @GetMapping("friendship")
     fun getFriendshipsbyUsername(@RequestParam username: String): ResponseEntity<List<String>>? {
         var friends: List<String>? =friendshipService.getFriendshipsbyUsername(username);
         friends.let {
@@ -26,7 +23,7 @@ class FriendshipController(
         return ResponseEntity(null, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("friendship/insertFriendship")
+    @PostMapping("friendship")
     fun insertFriendship(@RequestBody friendship: Friendship){
         friendshipService.insertFriendship(friendship);
     }

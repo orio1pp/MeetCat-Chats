@@ -11,9 +11,3 @@ class Grup121Application
 fun main(args: Array<String>) {
 	runApplication<Grup121Application>(*args)
 }
-
-@Bean
-fun passwordEncoder(): PasswordEncoder {
-	return BCryptPasswordEncoder()
-}
-

@@ -14,7 +14,7 @@ import upc.fib.pes.grup121.service.ChatService
 class ChatController(
     private final var chatService: ChatService
 ) {
-    @GetMapping("chat/getChatByFriendshipId")
+    @GetMapping("chat")
     fun getChatByFriendship(@RequestParam friendshipId: Long): ResponseEntity<Chat> {
         var chat: Chat? = chatService.getChatByFriendship(friendshipId)
         chat?.let{
@@ -23,7 +23,7 @@ class ChatController(
         return ResponseEntity(null, HttpStatus.BAD_REQUEST)
     }
 
-    @GetMapping("chat/getAllChatsByUserId")
+    @GetMapping("chats")
     fun getAllChats(@RequestParam userId: Long): ResponseEntity<List<Chat>>{
         var chats: List<Chat>? = chatService.getAllChats(userId)
         chats.let{
@@ -32,7 +32,7 @@ class ChatController(
         return ResponseEntity(null, HttpStatus.BAD_REQUEST)
     }
 
-    @PostMapping("chat/newChat")
+    @PostMapping("chat")
     fun insertChat(@RequestBody chat: Chat){
         chat.let{
             chatService.insertChat(it);
