@@ -14,7 +14,7 @@ import upc.fib.pes.grup121.service.MessageService
 class MessageController(
     private final var messageService: MessageService
 ) {
-    @GetMapping("message/getMessagesByid")
+    @GetMapping("message")
     fun getMessagesById(@RequestParam chatId: Long):ResponseEntity<List<Message>> {
         var messages: List<Message>? = messageService.getMessagesById(chatId)
         messages.let{
@@ -23,7 +23,7 @@ class MessageController(
         return ResponseEntity(null, HttpStatus.BAD_REQUEST)
     }
 
-    @PostMapping("message/newMessage")
+    @PostMapping("message")
     fun insertNewMessage(@RequestBody message: Message){
         message.let{
             return messageService.insertNewMessage(message);
