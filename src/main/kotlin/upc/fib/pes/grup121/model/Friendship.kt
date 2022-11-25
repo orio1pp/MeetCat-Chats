@@ -9,13 +9,10 @@ class Friendship(
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
     var id: Long? = null,
+    @Column
+    var friendId: String? = null,
+    @Column
+    var ownerId:String? = null
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private val user: User? = null,
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "friend_id")
-    private val friend: User? = null
 ) {
 }
