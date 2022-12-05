@@ -8,6 +8,7 @@ import upc.fib.pes.grup121.repository.MessageRepository
 class MessageService(
     private final var messageRepository: MessageRepository
 ) {
+    //falta paginar
     fun getMessagesById(chatId: Long): List<Message>?{
         chatId.let{
             var messages: List<Message>? = messageRepository.getMessagesByChatId(chatId);

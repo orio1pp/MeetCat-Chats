@@ -1,6 +1,7 @@
 package upc.fib.pes.grup121.service
 
 import org.springframework.stereotype.Service
+import upc.fib.pes.grup121.dto.ChatDTO
 import upc.fib.pes.grup121.model.Chat
 import upc.fib.pes.grup121.model.Friendship
 import upc.fib.pes.grup121.repository.ChatRepository
@@ -18,15 +19,16 @@ class ChatService(
         return null
     }
 
-    fun getAllChats(userId: Long): List<Chat>?{
-        var chats: List<Chat> = chatRepository.getAllChatsByUserId(userId)
+    fun getAllChats(userId: String): List<String>?{
+        var chats: List<String> = chatRepository.getAllChatsByUserId(userId)
         chats.let{
             return chats
         }
         return null
     }
 
-    fun insertChat(chat:Chat){
-        chatRepository.save(chat)
+    fun insertChat(chat: ChatDTO){
+        val newChat: Chat = Chat(null, friendshipService.getFriendshipbyId(chat.friendship), null);
+        chatRepository.save(newChat)
     }
 }

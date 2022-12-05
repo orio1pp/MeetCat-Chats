@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param
 import upc.fib.pes.grup121.model.Friendship
 
 interface FriendshipRepository: JpaRepository<Friendship, Long> {
-
     fun findAllByOwnerId(ownerId:String): List<String>
+
+    fun findByOwnerIdAndFriendId(ownerId: String?, friendId: String?): Friendship;
 }
