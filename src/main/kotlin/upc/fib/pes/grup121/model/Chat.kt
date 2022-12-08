@@ -17,4 +17,7 @@ class Chat(
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
     private val messageList: List<Message>? = null
 ) {
+    fun getFriendshipId(): Friendship?{
+        return this.friendship;
+    }
 }

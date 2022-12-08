@@ -10,4 +10,6 @@ interface ChatRepository : JpaRepository<Chat, Long> {
     fun getChatByFriendship(@Param("friendshipId") friendshipId: Long): Chat
     @Query("select * from chat c, Friendship f where f.id = c.friendship_id and f.user_id = :userId", nativeQuery = true)
     fun getAllChatsByUserId(@Param("userId") userId: Long): List<Chat>
+
+
 }
