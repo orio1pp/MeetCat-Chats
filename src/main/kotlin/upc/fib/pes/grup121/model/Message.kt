@@ -1,5 +1,6 @@
 package upc.fib.pes.grup121.model
 
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -12,7 +13,7 @@ class Message(
     @Column
     var text: String? = null,
     @Column
-    var date: String? = null,
+    var date: Date? = null,
     @ManyToOne
     @JoinColumn(name = "chat_id")
     var chat: Chat? = null,

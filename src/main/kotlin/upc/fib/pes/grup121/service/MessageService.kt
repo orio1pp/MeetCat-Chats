@@ -8,6 +8,11 @@ import upc.fib.pes.grup121.dto.MessagesDTO
 import upc.fib.pes.grup121.model.Chat
 import upc.fib.pes.grup121.model.Message
 import upc.fib.pes.grup121.repository.MessageRepository
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+
+
+
 
 
 @Service
@@ -27,8 +32,10 @@ class MessageService(
 
     fun insertNewMessage(message: InsertMessageDTO) {
         try {
+            val now = LocalDateTime.now()
+            val formattedDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").format(now)
             val chat: Chat = Chat(message.chatId)
-            messageRepository.save(Message(null, message.text, message.date, chat, message.username));
+            messageRepository.save(Message(null, message.text, SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").parse(formattedDate), chat, message.username));
         } catch (e: Exception) {
             throw Exception("Couldnt insert message")
         }
