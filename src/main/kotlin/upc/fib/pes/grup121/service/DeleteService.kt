@@ -22,7 +22,6 @@ class DeleteService(
             }
         }
     }
-
     fun deleteMessages(chatId: Long) {
         messageRepository.deleteMessages(chatId);
     }
@@ -39,7 +38,6 @@ class DeleteService(
             messageRepository.deleteMessages(chatId)
             chatRepository.deleteChat(chatId)
         }catch (e:java.lang.Exception){
-            throw Exception("Couldnt find the chat associated with that firendship")
         }
         friendshipRepository.deleteFriendship(friendId, ownerId);
     }
