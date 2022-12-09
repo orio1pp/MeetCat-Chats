@@ -2,6 +2,7 @@ package upc.fib.pes.grup121.service
 
 import org.springframework.stereotype.Service
 import upc.fib.pes.grup121.dto.ChatDTO
+import upc.fib.pes.grup121.dto.GetChatDTO
 import upc.fib.pes.grup121.model.Chat
 import upc.fib.pes.grup121.model.Friendship
 import upc.fib.pes.grup121.repository.ChatRepository
@@ -9,8 +10,7 @@ import upc.fib.pes.grup121.repository.ChatRepository
 @Service
 class ChatService(
     private final var chatRepository: ChatRepository,
-    private final var friendshipService: FriendshipService,
-    private final var messageService: MessageService
+    private final var friendshipService: FriendshipService
 ) {
     fun getChatByFriendship(friendshipId: Long): Chat? {
         var friendship: Friendship? = friendshipService.getFriendshipbyId(friendshipId);
@@ -19,24 +19,28 @@ class ChatService(
         }
         return null
     }
-    fun getAllChats(userId: Long): List<Chat>?{
-        var chats: List<Chat> = chatRepository.getAllChatsByUserId(userId)
-        chats.let{
-            return chats
+    fun getAllChats(username: String): List<GetChatDTO>?{
+        try{
+            var chats: List<Chat> = chatRepository.getAllChatsByUserId(username)
+            var result: MutableList<GetChatDTO> = ArrayList<GetChatDTO>();
+            chats.forEach({
+                var getChatDTO: GetChatDTO = GetChatDTO(it.chatId, it.getFriendship()!!.friendId, it.getFriendship()!!.id);
+                result.add(getChatDTO)
+            })
+            return result;
+        }catch (e: Exception){
+            throw Exception("Couldnt get all chats, because user doesnt have chats")
         }
-        return null
     }
-    fun insertChat(chat:Chat){
-        chatRepository.save(chat)
-    }
-    fun deleteChat(chatId: Long, userName: String){
-        chatRepository.findById(chatId).let {
-            val friendship: Friendship? = it.get().getFriendshipId()
-            if(friendship?.friendId.equals(userName) or friendship?.ownerId.equals(userName)) {
-                messageService.deleteMessages(chatId)
-                chatRepository.delete(it.get())
-
-            }
+    fun insertChat(chat:ChatDTO){
+        try{
+            val friendship:Friendship = friendshipService.getFriendshipbyId(chat.friendship)
+            chatRepository.save(Chat(null, friendship, null))
+        }catch (e:Exception){
+            throw java.lang.Exception("Could not find friendship")
         }
+    }
+    fun getChatById(chatId: Long): Chat{
+        return chatRepository.findById(chatId).get();
     }
 }

@@ -4,20 +4,20 @@ import javax.persistence.*
 @Entity
 @Table(name = "chat", uniqueConstraints = arrayOf(UniqueConstraint(columnNames = arrayOf("friendship_id")))
 )
-class Chat(
+data class Chat(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
     var chatId: Long? = null,
 
-    @OneToOne
+    @OneToOne(cascade = arrayOf(CascadeType.REMOVE), orphanRemoval = true)
     @JoinColumn(name = "friendship_id", referencedColumnName = "id")
     private val friendship: Friendship? = null,
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat", cascade = arrayOf(CascadeType.REMOVE), orphanRemoval = true)
     private val messageList: List<Message>? = null
 ) {
-    fun getFriendshipId(): Friendship?{
+    fun getFriendship(): Friendship?{
         return this.friendship;
     }
 }

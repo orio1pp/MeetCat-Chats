@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import upc.fib.pes.grup121.dto.ChatDTO
+import upc.fib.pes.grup121.dto.GetChatDTO
 import upc.fib.pes.grup121.model.Chat
 import upc.fib.pes.grup121.service.ChatService
+import upc.fib.pes.grup121.service.DeleteService
 
 @RestController
 class ChatController(
-    private final var chatService: ChatService
+    private final var chatService: ChatService,
+    private final var deleteService: DeleteService
 ) {
     @GetMapping("chat")
     fun getChatByFriendship(@RequestParam friendshipId: Long): ResponseEntity<Chat> {
@@ -26,23 +29,23 @@ class ChatController(
         return ResponseEntity(null, HttpStatus.BAD_REQUEST)
     }
     @GetMapping("chats")
-    fun getAllChats(@RequestParam userId: String): List<String>?{
-        var chats: List<String>? = chatService.getAllChats(userId)
+    fun getAllChats(@RequestParam username: String): ResponseEntity<List<GetChatDTO>>?{
+        var chats: List<GetChatDTO>? = chatService.getAllChats(username)
         chats.let{
-            return it;
+            return ResponseEntity.ok(it);
         }
-        return null;
+        return ResponseEntity(null, HttpStatus.BAD_REQUEST);
 
     }
     @PostMapping("chat")
     fun insertChat(@RequestBody chat: ChatDTO){
         chat.let{
-            chatService.insertChat(it);
+            chatService.insertChat(chat);
         }
     }
     @DeleteMapping("chat")
     fun deleteChat(@RequestParam chatId: Long, userName: String){
-        chatService.deleteChat(chatId, userName)
+        deleteService.deleteChat(chatId, userName)
     }
 
 }

@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>upc.fib.pes</groupId>
-	<artifactId>grup12-1</artifactId>
+	<artifactId>meetcat-chats</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<name>grup12-1</name>
 	<description>Api esdeveniments</description>
@@ -120,6 +120,7 @@
 				</dependencies>
 			</plugin>
 		</plugins>
+		<finalName>meetcat-chat-docker</finalName>
 	</build>
 
 </project>
