@@ -12,10 +12,10 @@ interface ChatRepository : JpaRepository<Chat, Long> {
     fun getChatByFriendship(@Param("friendshipId") friendshipId: Long): Chat
     @Query("select * from chat c, friendship f where f.id = c.friendship_id and f.owner_id = :username", nativeQuery = true)
     fun getAllChatsByUserId(@Param("username") username: String): List<Chat>
-
-
     @Transactional
     @Modifying
     @Query("delete from chat c where c.chat_id = :chatId", nativeQuery = true)
     fun deleteChat(@Param("chatId") chatId: Long)
+    @Query("select *  from chat c, friendship f where (f.owner_id = :username or f.friend_id =:username) and c.friendship_id =f.id", nativeQuery = true )
+    fun getByUsername(@Param("username")username: String): List<Chat>
 }
