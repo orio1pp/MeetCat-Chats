@@ -21,12 +21,15 @@ class FriendshipService(
     }
     fun insertFriendship(friendship: Friendship): Friendship? {
         try {
-            friendshipRepository.findByOwnerIdAndFriendId(friendship.ownerId, friendship.friendId).let {
-                return friendship;
-            }
+            friendshipRepository.findByOwnerIdAndFriendId(friendship.ownerId, friendship.friendId)
         }catch (e:Exception) {
-            return friendshipRepository.save(friendship);
+            try{
+                friendshipRepository.findByOwnerIdAndFriendId(friendship.friendId, friendship.ownerId);
+            }catch (e:java.lang.Exception) {
+                return friendshipRepository.save(friendship);
+            }
         }
+        return friendship;
     }
 
     fun getFriendshipbyId(id: Long): Friendship {
