@@ -60,6 +60,7 @@ class ChatService(
             var getChatDTO: GetChatDTO = GetChatDTO(it.chatId, username, it.getFriendship()!!.id);
             result.add(getChatDTO)
         })
+        
         return result
     }
 }
