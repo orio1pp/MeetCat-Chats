@@ -15,9 +15,14 @@ class FriendshipService(
 
 ) {
     fun getFriendshipsbyUsername(username: String, page:Int, size: Int): List<Friendship> {
+        val friends: MutableList<Friendship>? = null;
         val sortByDate: PageRequest = PageRequest.of(page, size, Sort.by("friendId").ascending())
-        val friends: List<Friendship> = friendshipRepository.findAllByOwnerId(username,sortByDate);
-        return friends;
+        try {
+            val friends = friendshipRepository.findAllByOwnerIdOrFriendId(username, username, sortByDate);
+        }catch (e:Exception){
+            throw Exception("Couldnt get friends")
+        }
+        return friends!!.toList();
     }
     fun insertFriendship(friendship: Friendship): Friendship? {
         try {

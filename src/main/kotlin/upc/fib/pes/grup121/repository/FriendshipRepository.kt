@@ -10,7 +10,7 @@ import javax.transaction.Transactional
 
 
 interface FriendshipRepository: JpaRepository<Friendship, Long> {
-    fun findAllByOwnerId(ownerId:String, pageable: PageRequest): List<Friendship>
+    fun findAllByOwnerIdOrFriendId(ownerId:String, friendId:String, pageable: PageRequest): List<Friendship>
     fun findByOwnerIdAndFriendId(ownerId: String?, friendId: String?) : Friendship
     @Transactional
     @Modifying
