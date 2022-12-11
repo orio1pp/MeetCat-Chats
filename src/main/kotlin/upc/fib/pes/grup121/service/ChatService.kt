@@ -62,5 +62,4 @@ class ChatService(
         })
         return result
     }
-    x
 }
