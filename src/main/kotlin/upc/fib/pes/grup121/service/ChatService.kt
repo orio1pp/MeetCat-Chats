@@ -50,7 +50,6 @@ class ChatService(
             throw java.lang.Exception("User doesn't exists")
         }
     }
-    
 
     private fun getChatsDTO(chats:List<Chat>, userName:String): MutableList<GetChatDTO> {
         val result: MutableList<GetChatDTO> = ArrayList<GetChatDTO>();
