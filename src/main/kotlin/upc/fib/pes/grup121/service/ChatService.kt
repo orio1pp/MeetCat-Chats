@@ -22,7 +22,7 @@ class ChatService(
     fun getAllChats(username: String): List<GetChatDTO>?{
         try{
             var chats: List<Chat> = chatRepository.getAllChatsByUserId(username)
-            var result: MutableList<GetChatDTO> = getChatsDTO(chats)
+            var result: MutableList<GetChatDTO> = getChatsDTO(chats, username)
             return result;
         }catch (e: Exception){
             throw Exception("Couldnt get all chats, because user doesnt have chats")
@@ -43,7 +43,7 @@ class ChatService(
     fun getChatByUsername(username: String): MutableList<GetChatDTO> {
         try{
             val chats:List<Chat> = chatRepository.getByUsername(username);
-            val chatsDTO:MutableList<GetChatDTO> = getChatsDTO(chats)
+            val chatsDTO:MutableList<GetChatDTO> = getChatsDTO(chats, username)
             return chatsDTO;
         }
         catch (e:Exception){
@@ -51,10 +51,13 @@ class ChatService(
         }
     }
 
-    private fun getChatsDTO(chats:List<Chat>): MutableList<GetChatDTO> {
+    private fun getChatsDTO(chats:List<Chat>, username:String): MutableList<GetChatDTO> {
         val result: MutableList<GetChatDTO> = ArrayList<GetChatDTO>();
         chats.forEach({
-            var getChatDTO: GetChatDTO = GetChatDTO(it.chatId, it.getFriendship()!!.friendId, it.getFriendship()!!.id);
+            var username:String? = it.getFriendship()!!.friendId;
+            if(it.getFriendship()!!.friendId.equals(username))
+                username = it.getFriendship()!!.ownerId
+            var getChatDTO: GetChatDTO = GetChatDTO(it.chatId, username, it.getFriendship()!!.id);
             result.add(getChatDTO)
         })
         return result
