@@ -51,11 +51,11 @@ class ChatService(
         }
     }
 
-    private fun getChatsDTO(chats:List<Chat>, username:String): MutableList<GetChatDTO> {
+    private fun getChatsDTO(chats:List<Chat>, userName:String): MutableList<GetChatDTO> {
         val result: MutableList<GetChatDTO> = ArrayList<GetChatDTO>();
         chats.forEach({
             var username:String? = it.getFriendship()!!.friendId;
-            if(it.getFriendship()!!.friendId.equals(username))
+            if(it.getFriendship()!!.friendId.equals(userName))
                 username = it.getFriendship()!!.ownerId
             var getChatDTO: GetChatDTO = GetChatDTO(it.chatId, username, it.getFriendship()!!.id);
             result.add(getChatDTO)
