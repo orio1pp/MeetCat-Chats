@@ -21,7 +21,7 @@ class MessageService(
         val sortByDate: PageRequest = PageRequest.of(messageDTO.page, messageDTO.size, Sort.by("date").ascending())
         try {
             var messages: List<Message>? =
-                messageRepository.getMessages(messageDTO.username, messageDTO.chatId, sortByDate);
+                messageRepository.getMessages(messageDTO.chatId, sortByDate);
             return messages;
         } catch (e: Exception) {
             throw Exception("Couldnt get all messages, because chat does not exist")

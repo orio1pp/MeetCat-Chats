@@ -14,8 +14,8 @@ interface MessageRepository: JpaRepository<Message,Long> {
 
     fun findAllByChatAndUsername(chatId: Long, username:String, pageable: PageRequest): List<Message>
 
-    @Query("select * from message m where m.username = :username and m.chat_id = :chatId", nativeQuery = true)
-    fun getMessages(@Param("username") username:String, @Param("chatId") chatId:Long, pageable: PageRequest): List<Message>
+    @Query("select * from message m where m.chat_id = :chatId", nativeQuery = true)
+    fun getMessages(@Param("chatId") chatId:Long, pageable: PageRequest): List<Message>
 
     @Transactional
     @Modifying
