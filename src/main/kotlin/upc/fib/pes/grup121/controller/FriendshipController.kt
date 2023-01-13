@@ -5,35 +5,44 @@ import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
-import upc.fib.pes.grup121.dto.FriendshipsDTO
+import org.springframework.web.bind.annotation.*
+import upc.fib.pes.grup121.dto.GetFriendshipsDTO
 import upc.fib.pes.grup121.model.Friendship
 import upc.fib.pes.grup121.service.FriendshipService
+import upc.fib.pes.grup121.service.DeleteService
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
-@Controller
+@CrossOrigin
+@RestController
 class FriendshipController(
-    private final var friendshipService: FriendshipService
+    private final var friendshipService: FriendshipService,
+    private final var deleteService: DeleteService
 ) {
+    //falta paginar
     @GetMapping("friendship")
-    fun getFriendshipsbyUsername(@RequestBody friendshipsDTO: FriendshipsDTO): ResponseEntity<List<String>>? {
-        var friends: List<String>? =friendshipService.getFriendshipsbyUsername(friendshipsDTO);
-        friends.let {
-            return ResponseEntity.ok(it)
+    fun getFriendshipsbyUsername(@RequestParam username:String, @RequestParam page: Int, @RequestParam size: Int): ResponseEntity<List<Friendship>>{
+        var friends: List<Friendship> =friendshipService.getFriendshipsbyUsername(username, page, size);
+        return ResponseEntity.ok(friends)
+    }
+
+    @PostMapping("friendship")
+    fun insertFriendship(@RequestBody friendship: Friendship): ResponseEntity<Friendship>{
+        friendship.let {
+            friendshipService.insertFriendship(friendship).let {
+                return ResponseEntity.ok(it);
+            }
+            return ResponseEntity(null, HttpStatus.IM_USED);
         }
         return ResponseEntity(null, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("friendship")
-    fun insertFriendship(@RequestBody friendship: Friendship){
-        friendshipService.insertFriendship(friendship);
-    }
-
-    @DeleteMapping("friendship")
+    @RequestMapping(method = [RequestMethod.DELETE], value = ["friendship"])
     fun deleteFriendship(@RequestParam friendId: String, @RequestParam ownerId: String){
-        friendshipService.deleteFriend(friendId, ownerId);
+        deleteService.deleteFriend(friendId, ownerId);
     }
 }

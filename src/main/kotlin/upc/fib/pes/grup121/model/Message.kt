@@ -1,5 +1,7 @@
 package upc.fib.pes.grup121.model
 
+import java.time.LocalDateTime
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -12,7 +14,7 @@ class Message(
     @Column
     var text: String? = null,
     @Column
-    var date: String? = null,
+    var date: LocalDateTime? = null,
     @ManyToOne
     @JoinColumn(name = "chat_id")
     var chat: Chat? = null,
